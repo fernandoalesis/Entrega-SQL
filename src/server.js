@@ -11,6 +11,8 @@ const ContenedorMysql = require("./managers/contenedorMysql");
 // const productosApi = new Contenedor("productos.txt");
 const productosApi = new ContenedorMysql(options.mariadb, "products");
 // const chatApi = new ContenedorChat("chat.txt");
+//solo cambia la configuracion, pero podemos usar el service de mysql
+//las funciones de socket son las mismas pero usan la base de datos
 const chatApi = new ContenedorMysql(options.sqliteDB, "chat");
 
 //server
@@ -51,7 +53,7 @@ io.on("connection", async (socket) => {
   //envio de los productos al socket que se conecta.
   io.sockets.emit("products", await productosApi.getAll());
 
-  //recibimos el producto nuevo del cliente y lo guardamos con filesystem
+  //recibimos el producto nuevo del cliente y lo guardamos con
   socket.on("newProduct", async (data) => {
     await productosApi.save(data);
     //despues de guardar un nuevo producto, enviamos el listado de productos actualizado a todos los sockets conectados

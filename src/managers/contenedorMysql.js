@@ -36,6 +36,29 @@ class ContenedorMysql {
       return `Hubo un error ${error}`;
     }
   }
+  async updateById(id) {
+    try {
+      const data = await this.database
+        .from(this.tableName)
+        .where("id", id)
+        .update({})
+        .then(() => console.log("register updated"));
+      return data;
+    } catch (error) {
+      return `Hubo un error ${error}`;
+    }
+  }
+  async deleteById(id) {
+    try {
+      const data = await this.database
+        .from(this.tableName)
+        .where("id", id)
+        .del()
+        .then(() => console.log("register deleted"));
+    } catch (error) {
+      return `Hubo un error ${error}`;
+    }
+  }
 }
 
 module.exports = ContenedorMysql;
